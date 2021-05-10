@@ -7,13 +7,7 @@ source("func.R")
 
 not_sel = "Not Selected"
 plot_choices <- character(0)
-
-
-ui <- fluidPage()
-
-testando123 <- function(){
-  geom_point()
-}
+options(shiny.maxRequestSize=400*1024^2)
 
 
 
@@ -79,6 +73,7 @@ draw_plot_1 <- function(data_input, num_var_1 = NULL, num_var_2 = NULL, fact_var
   }
 }
 
+
 server <- function(input, output) {
   data_input <- reactive({
     req(input$csv_input)
@@ -128,7 +123,7 @@ server <- function(input, output) {
     draw_plot_2(data_input = data_input(), num_var_1 = num_var_1(), num_var_2 = num_var_2(), fact_var = fact_var(), plot_type = plot_type())
   })
   
-
+  
   
   
   output$plot_1 <- renderPlot(plot_1())
@@ -136,7 +131,7 @@ server <- function(input, output) {
 
 
 
-
+ui <- fluidPage()
 
 main_page <- tabPanel(
   title = "Analysis",
@@ -198,6 +193,8 @@ ui <- navbarPage(
   main_page, 
   about_page
 )
+
+
 
 
 shinyApp(ui = ui, server = server)
